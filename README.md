@@ -33,6 +33,8 @@ Tasked with creating a unified structure of documentation for the Swiss Confeder
   * Linux: Install TeX Live via your package manager (e.g.: ``sudo apt install texlive-full``)
  
   * Windows / Mac: Use [MiKTeX](https://miktex.org/download).
+ 
+Make sure all of these tools are accessible from your system's PATH.
 
 ## Project Directory Explanation
 ~~~
@@ -68,7 +70,7 @@ The only things required by the user are to:
 6. Finally, the script removes LaTeX auxiliary files (e.g.: ``.aux``, ``.fls``, ``.fdb_latexmk``) and other temporary fragments (e.g.: ``body.tex``) to keep the workspace clean. The only file that it does not delete is the ``.log`` file, such that in the event of a compiling error, the logs can be analyzed. It is possible to delete it automatically however by simply adding ``.log`` to the ``cleanup_aux_files`` command.
 
 ## Credits / Acknowledgments
-This project is developed and maintained by **Marcos Cabanas**.
+This project is developed and maintained by **Marcos Cabanas** with help from **Kelan Solomon**.
 
 Special thanks to the developers and maintainers of the following tools that made this work possible:
 
