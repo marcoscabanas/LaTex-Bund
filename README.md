@@ -28,11 +28,14 @@ Tasked with creating a unified structure of documentation for the Swiss Confeder
 
 * **LaTex compiler**
 
-  Required for compiling ``.tex`` files into PDF.
-
-  * Linux: Install TeX Live via your package manager (e.g.: ``sudo apt install texlive-full``)
+  Required for compiling ``.tex`` files into PDF. Use [MiKTeX](https://miktex.org/download).
  
-  * Windows / Mac: Use [MiKTeX](https://miktex.org/download).
+* **Perl**
+
+  Required by ``latexmk`` to function.
+
+  * Linux/macOS: Usually pre-installed.
+  * Windows: Install via [Strawberry Perl](https://strawberryperl.com).
  
 Make sure all of these tools are accessible from your system's PATH.
 
