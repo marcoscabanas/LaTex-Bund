@@ -199,3 +199,7 @@
   {0mm}
   {0mm}
   {0mm}
+
+% --- PANDOC COMPATIBILITY PATCHES ---
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
