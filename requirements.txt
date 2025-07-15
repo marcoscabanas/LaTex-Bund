@@ -1,0 +1,4 @@
+PyYAML
+jijnja2
+pandoc
+latexmk
