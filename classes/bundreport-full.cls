@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{bundreport}[2025/07/14 Bund report - Marcos Cabanas]
+\ProvidesClass{bundreport-full}[2025/07/14 Bund report full - Marcos Cabanas]
 
 % --- LOAD BASE CLASS ---
 \LoadClass[11pt,a4paper]{article}
@@ -39,18 +39,21 @@
   {\thesection}
   {17.5mm}
   {}
+  [\vspace{-\parskip}]
 
 \titleformat{\subsection}
   {\normalfont\large\bfseries}
   {\thesubsection}
   {14.1mm}
   {}
+  [\vspace{-\parskip}]
 
 \titleformat{\subsubsection}
   {\normalfont\large\bfseries}
   {\thesubsubsection}
   {10.6mm}
   {}
+  [\vspace{-\parskip}]
 
 \newcommand{\setmainmatterindent}{
   \setlength{\leftskip}{20mm}
@@ -103,6 +106,11 @@
 \newcommand{\setqrcodereference}[1]{\def\@qrcodereference{#1}}
 \newcommand{\qrcodereference}{\@qrcodereference}
 \newcommand{\@qrcodereference}{} % initialize
+
+% location
+\newcommand{\setlocation}[1]{\def\@location{#1}}
+\newcommand{\location}{\@location}
+\newcommand{\@location}{} % initialize
 
 % --- MAIN MATTER PAGE STYLE ---
 \fancyhf{}
@@ -203,3 +211,14 @@
 % --- PANDOC COMPATIBILITY PATCHES ---
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\setlength{\parskip}{\baselineskip}
+
+\usepackage{etoolbox}
+% Disable \parskip for first paragraph after heading
+\makeatletter
+\patchcmd{\@startsection}
+  {\@afterindenttrue}
+  {\@afterindenttrue\@afterheading}
+  {}{}
+\makeatother

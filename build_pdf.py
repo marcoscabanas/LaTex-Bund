@@ -77,7 +77,7 @@ def main():
     md_file = "body.md"
     tex_file = "body.tex"
     metadata_file = "metadata.yaml"
-    template_file = "layout/main_template.tex"
+    template_file = "layout/main_template_short.tex" #########################################################################
     main_tex = "main.tex"
 
     # Check files exist
