@@ -4,3 +4,7 @@ main.tex
 body.tex
 *.pdf
 *.log
+build/
+dist/
+__pycache__/
+Output/
