@@ -58,7 +58,7 @@ def compile_latex(main_tex):
 
 def cleanup_aux_files(tex_basename="main", extra_files=None):
     """Remove LaTeX auxiliary files and any additional files passed in."""
-    extensions_to_remove = [".aux", ".fdb_latexmk", ".fls", ".tex"]
+    extensions_to_remove = [".aux", ".fdb_latexmk", ".fls", ".tex", ".log"]
     files_to_remove = [Path(f"{tex_basename}{ext}") for ext in extensions_to_remove]
 
     # Add extra files if wanted
