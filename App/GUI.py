@@ -3,7 +3,7 @@ from tkinter import ttk, filedialog, messagebox, scrolledtext
 import threading
 from pathlib import Path
 import os, sys
-from utils.functions import get_resource_path
+from utils.functions import get_resource_path, check_tinytex, check_pandoc
 if sys.platform == "win32":
     from ctypes import windll
     try:
@@ -16,7 +16,7 @@ from build_pdf import convert_md_to_tex, generate_main_tex, compile_latex, clean
 class LaTeXProcessorGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("LaTeX Document Processor")
+        self.root.title("MD to PDF")
         self.root.geometry("800x600")
         self.dir = Path(__file__).resolve().parent
         self.md_file = tk.StringVar(value = "-")
@@ -121,7 +121,12 @@ class LaTeXProcessorGUI:
             if not Path(f).exists():
                 messagebox.showerror("Missing File", f"File not found:\n{f}")
                 return
-
+        if not check_tinytex():
+            messagebox.showerror("Missing Dependency", "TinyTeX/LaTeX compiler is not installed.")
+            return
+        if not check_pandoc():
+            messagebox.showerror("Missing Dependency", "Pandoc is not installed.")
+            return
         self.is_processing = True
         self.process_button.config(state="disabled")
         self.stop_button.config(state="normal")
