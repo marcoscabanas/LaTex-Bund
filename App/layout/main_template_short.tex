@@ -1,0 +1,67 @@
+\documentclass{classes/bundreport-short}
+
+\begin{document}
+\thispagestyle{empty}
+
+% --- METADATA ---
+\setreportdate{(( report_date ))}
+\setreporttitle{(( report_title ))}
+\setreportsubtitle{(( report_subtitle ))}
+\setreportauthor{(( report_author ))}
+\setreportnumber{(( report_number ))}
+\setclassification{(( classification ))}
+\setqrcodereference{(( qrcode_reference ))}
+\setrelevantdepartment{(( relevant_department ))}
+\setrelevantsection{(( relevant_section ))}
+\setlocation{(( location ))}
+
+% LOGO
+\begin{adjustwidth}{-11mm}{}
+  \includegraphics[width=55mm]{logos/logo_bund.png}
+\end{adjustwidth}
+
+% DEPARTMENT HEADER
+\begin{textblock*}{70mm}(105mm,25.5mm)
+    {\fontsize{7.5}{10}\selectfont
+    \noindent Département fédéral de la défense, de la \\
+    protection de la population et des sports DDPS\\[0.5\baselineskip]
+    \textbf{\relevantdepartment} \\
+    \relevantsection}
+\end{textblock*}
+
+% CLASSIFICATION
+\vspace{20mm}
+{\fontsize{11}{14}\selectfont
+\hfill \textbf{\classification}}
+
+% REPORT NUMBER
+\vspace{12mm}
+{\fontsize{11}{13.2}\selectfont
+\noindent \reportnumber}
+
+% LOCATION & DATE
+\vspace{2\baselineskip}
+\fontsize{11}{13.2}\selectfont
+\noindent \location , \reportdate
+
+% REPORT TITLE & SUBTITLE
+\vspace{3\baselineskip}
+\fontsize{13}{15.6}\selectfont
+\noindent \textbf{\reporttitle}
+
+\fontsize{11}{13.2}\selectfont
+\noindent \reportsubtitle
+
+\vspace{\baselineskip}
+
+\setstandardpagestyle
+\setmainmatterindent
+\setlength{\parskip}{\baselineskip}
+
+\input{body.tex}
+
+\vfill
+\reportauthor
+\vfill
+
+\end{document}

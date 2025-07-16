@@ -4,6 +4,8 @@ import shutil
 from pathlib import Path
 from jinja2 import Environment
 import os
+from utils.functions import get_resource_path
+
 
 def run_cmd(command, logger=print):
     logger(f"Running: {' '.join(command)}")
@@ -31,8 +33,10 @@ def convert_md_to_tex(md_file, tex_file, logger=print):
 def generate_main_tex(metadata_file, template, output_file, logger=print):
     with open(metadata_file) as f:
         metadata = yaml.safe_load(f)
-    if template == "Main": 
-        template_file = Path("App/layout/main_template.tex").resolve()
+    if template == "Full": 
+        template_file = get_resource_path(os.path.join("layout","main_template_full.tex"))
+    elif template == "Short":
+        template_file = get_resource_path(os.path.join("layout","main_template_short.tex"))
     with open(template_file) as f:
         template_content = f.read()
     
@@ -63,13 +67,20 @@ def compile_latex(main_tex, output_dir, app_dir, logger=print):
         "latexmk",
         "-pdf",
         "-pdflatex=pdflatex -interaction=nonstopmode",
+        "-silent",
         "-f",
         os.path.join(output_dir,main_tex)
     ], logger=logger)
 
-def cleanup_aux_files(temp, output_dir, logger=print):
-    os.chdir(Path(output_dir).parent)
-    shutil.copy(os.path.join(temp, "main.pdf"), os.path.join(output_dir, "main.pdf"))
+
+def cleanup_aux_files(temp, output_dir, home_dir, file_name, logger=print):
+    os.chdir(Path(home_dir).parent)
+    shutil.copy(os.path.join(temp, "main.pdf"), os.path.join(output_dir, f"{file_name}.pdf"))
+
+    # shutil.move(
+    #     os.path.join(temp, "main.pdf"),
+    #     os.path.join(output_dir, f"{file_name}.pdf")
+    # )    
     shutil.rmtree(temp, ignore_errors=True)
     logger(f"Cleaned up auxiliary files in {output_dir}")
 

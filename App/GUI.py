@@ -2,9 +2,14 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, scrolledtext
 import threading
 from pathlib import Path
-import os
-from ctypes import windll
-windll.shcore.SetProcessDpiAwareness(1)
+import os, sys
+from utils.functions import get_resource_path
+if sys.platform == "win32":
+    from ctypes import windll
+    try:
+        windll.shcore.SetProcessDpiAwareness(1)
+    except Exception:
+        pass  # Fails silently on unsupported Windows versions
 
 from build_pdf import convert_md_to_tex, generate_main_tex, compile_latex, cleanup_aux_files
 
@@ -17,9 +22,11 @@ class LaTeXProcessorGUI:
         self.md_file = tk.StringVar(value = "-")
         self.metadata_file = tk.StringVar(value = "-")
         self.template_file_path = "-"
-        self.template = tk.StringVar(value = "Main")
+        self.template = tk.StringVar(value = "Full")
         self.output_dir = tk.StringVar(value = "-")
         self.cleanup_var = tk.BooleanVar(value = True)
+        self.filename = tk.StringVar(value = "Bund Report")
+        root.iconbitmap(get_resource_path(os.path.join("logos","BUNDPDF.ico")))
 
         self.is_processing = False
 
@@ -39,7 +46,8 @@ class LaTeXProcessorGUI:
         self._add_file_input(file_frame, "Markdown File:", self.md_file, 0, "*.md")
         self._add_file_input(file_frame, "Metadata File:", self.metadata_file, 1, "*.yaml")
         self._add_dir_input(file_frame, "Output Directory:", self.output_dir, 2)
-        self._chose_template(file_frame, "Template File:", self.template, 3)
+        self._add_output_name(file_frame, "Output File Name:", self.filename, 3)
+        self._chose_template(file_frame, "Template File:", self.template, 4)
 
         options_frame = ttk.LabelFrame(main_frame, text="Options")
         options_frame.grid(row=1, column=0, columnspan=2, sticky="ew", pady=5)
@@ -67,9 +75,14 @@ class LaTeXProcessorGUI:
 
         self.log_text = scrolledtext.ScrolledText(log_frame, height=15, wrap=tk.WORD)
         self.log_text.grid(row=0, column=0, sticky="nsew")
+
+    def _add_output_name(self, frame, label, var, row):
+        ttk.Label(frame, text=label).grid(row=row, column=0, sticky="w", pady=2)
+        ttk.Entry(frame, textvariable=var).grid(row=row, column=1, sticky="ew", pady=2)
+
     def _chose_template(self, frame, label, var, row):
         ttk.Label(frame, text=label).grid(row=row, column=0, sticky="w", pady=2)
-        ttk.Combobox(frame, textvariable=var, values=["Main"]).grid(row=row, column=1, sticky="ew", pady=2)
+        ttk.Combobox(frame, textvariable=var, values=["Full", "Short"]).grid(row=row, column=1, sticky="ew", pady=2)
     
     def _add_file_input(self, frame, label, var, row, filetype):
         ttk.Label(frame, text=label).grid(row=row, column=0, sticky="w", pady=2)
@@ -146,7 +159,7 @@ class LaTeXProcessorGUI:
             compile_latex("main.tex", self.temp_output_dir, self.dir, logger=self.log)
             if self.cleanup_var.get():
                 self.log("Step 4: Cleaning up files...")
-                cleanup_aux_files(self.temp_output_dir, self.output_dir.get(), logger=self.log)
+                cleanup_aux_files(self.temp_output_dir, self.output_dir.get(), self.dir, self.filename.get(), logger=self.log)
 
             self.log("✅ Document processed successfully.")
             messagebox.showinfo("Success", "Document processed successfully!")
