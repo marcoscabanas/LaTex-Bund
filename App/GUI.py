@@ -14,12 +14,12 @@ class LaTeXProcessorGUI:
         self.root.title("LaTeX Document Processor")
         self.root.geometry("800x600")
         self.dir = Path(__file__).resolve().parent
-        self.md_file = tk.StringVar(value="C:/Users/kelan/Desktop/LaTex-Bund/Source/body.md")
-        self.metadata_file = tk.StringVar(value="C:/Users/kelan/Desktop/LaTex-Bund/Source/metadata.yaml")
-        self.template_file_path = "C:/Users/kelan/Desktop/LaTex-Bund/App/layout/main_template.tex"
-        self.template = tk.StringVar(value="Main")
-        self.output_dir = tk.StringVar(value="C:/Users/kelan/Desktop/LaTex-Bund/Output")
-        self.cleanup_var = tk.BooleanVar(value=True)
+        self.md_file = tk.StringVar(value = "-")
+        self.metadata_file = tk.StringVar(value = "-")
+        self.template_file_path = "-"
+        self.template = tk.StringVar(value = "Main")
+        self.output_dir = tk.StringVar(value = "-")
+        self.cleanup_var = tk.BooleanVar(value = True)
 
         self.is_processing = False
 
@@ -104,7 +104,7 @@ class LaTeXProcessorGUI:
             return
         self.temp_output_dir = os.path.join(self.output_dir.get(), "temp_LaTeX")
         # Validate files
-        for f in [self.md_file.get(), self.metadata_file.get(), self.template_file_path]:
+        for f in [self.md_file.get(), self.metadata_file.get()]:
             if not Path(f).exists():
                 messagebox.showerror("Missing File", f"File not found:\n{f}")
                 return
