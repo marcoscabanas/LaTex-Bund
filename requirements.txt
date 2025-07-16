@@ -1,4 +1,4 @@
 PyYAML
-jijnja2
+Jinja2
 pandoc
 latexmk
