@@ -121,12 +121,12 @@ class LaTeXProcessorGUI:
             if not Path(f).exists():
                 messagebox.showerror("Missing File", f"File not found:\n{f}")
                 return
-        if not check_tinytex():
-            messagebox.showerror("Missing Dependency", "TinyTeX/LaTeX compiler is not installed.")
-            return
-        if not check_pandoc():
-            messagebox.showerror("Missing Dependency", "Pandoc is not installed.")
-            return
+        # if not check_tinytex():
+        #     messagebox.showerror("Missing Dependency", "TinyTeX/LaTeX compiler is not installed.")
+        #     return
+        # if not check_pandoc():
+        #     messagebox.showerror("Missing Dependency", "Pandoc is not installed.")
+        #     return
         self.is_processing = True
         self.process_button.config(state="disabled")
         self.stop_button.config(state="normal")

@@ -2,6 +2,7 @@
 
 from PyInstaller.utils.hooks import collect_data_files
 import os
+import sys
 
 # Utility to bundle folders
 def folder_to_datas(folder_name):
@@ -34,24 +35,47 @@ a = Analysis(
 
 pyz = PYZ(a.pure)
 
+
+# Determine platform-specific values
+if sys.platform == 'win32':
+    icon_path = 'logos\\BUNDPDF.ico'
+    windowed = True
+    console = False
+    target_name = 'MD to LaTeX.exe'
+    argv_emulation = False
+elif sys.platform == 'darwin':
+    icon_path = 'logos/BUNDPDF.icns'
+    windowed = True
+    console = False
+    target_name = 'MD to LaTeX'
+    argv_emulation = True  
+elif sys.platform.startswith('linux'):
+    icon_path = None  # Icons not typically used for CLI apps; optional .desktop files for GUI
+    windowed = False  # No windowed mode by default
+    console = True    # True if it's a CLI tool
+    target_name = 'md-to-latex'
+    argv_emulation = False
+else:
+    raise RuntimeError(f"Unsupported platform: {sys.platform}")
+
 exe = EXE(
     pyz,
     a.scripts,
     a.binaries,
     a.datas,
     [],
-    name='MD to LaTeX',
+    name=target_name,
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,
-    windowed=True,
-    icon='logos\BUNDPDF.ico',
+    console=console,
+    windowed=windowed,
+    icon=icon_path,
     disable_windowed_traceback=False,
-    argv_emulation=False,
+    argv_emulation=argv_emulation,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
