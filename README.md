@@ -98,11 +98,3 @@ Special thanks to the developers and maintainers of the following tools that mad
 - [Python](https://www.python.org/) – the core language used to script the pipeline
 
 Gratitude also goes to the open-source community for maintaining the tools and libraries used in this repository.
-
-
-
-
-
-
-
-pyinstaller GUI.spec --distpath ..\App\Microsoft\exe --workpath ..\App\Microsoft\build
