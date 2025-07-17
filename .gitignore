@@ -4,7 +4,6 @@ __pycache__/
 *.pdf
 *.log
 build/
-App/Windows/build/
-App/Windows/exe/*
-!App/Windows/exe/MD2PDF.exe
+App/
 Output/
+*.exe
