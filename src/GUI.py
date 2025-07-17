@@ -4,6 +4,8 @@ import threading
 from pathlib import Path
 import os, sys
 from utils.functions import get_resource_path, check_tinytex, check_pandoc
+from utils.build_pdf import convert_md_to_tex, generate_main_tex, compile_latex, cleanup_aux_files
+
 if sys.platform == "win32":
     from ctypes import windll
     try:
@@ -11,7 +13,6 @@ if sys.platform == "win32":
     except Exception:
         pass  # Fails silently on unsupported Windows versions
 
-from build_pdf import convert_md_to_tex, generate_main_tex, compile_latex, cleanup_aux_files
 
 class LaTeXProcessorGUI:
     def __init__(self, root):
